@@ -398,3 +398,13 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+UnitOfWorkTest/bin/Debug/net8.0/UnitOfWorkTest.dll
+UnitOfWorkTest/bin/Debug/net8.0/UnitOfWorkTest.pdb
+UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.AssemblyInfo.cs
+UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.AssemblyInfoInputs.cache
+UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.csproj.CoreCompileInputs.cache
+UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.csproj.FileListAbsolute.txt
+UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.dll
+UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.pdb
+UnitOfWorkTest/obj/Debug/net8.0/ref/UnitOfWorkTest.dll
+UnitOfWorkTest/obj/Debug/net8.0/refint/UnitOfWorkTest.dll

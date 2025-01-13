@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using UnitOfWorkTest.Repositories.Interfaces;
 
-namespace UnitOfWorkTest.Repositories.classes
+namespace UnitOfWorkTest.Repositories.Classes
 {
 
     public class UserRepository : GenericRepository<User, int>, IUserRepository

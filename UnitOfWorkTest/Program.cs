@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using UnitOfWorkTest;
 using UnitOfWorkTest.Repositories;
-using UnitOfWorkTest.Repositories.classes;
+using UnitOfWorkTest.Repositories.Classes;
 using UnitOfWorkTest.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 #region Add file-based logging
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
-    .WriteTo.File("logs/MyApplication.log", rollingInterval: RollingInterval.Day)
+    .WriteTo.File("logs/MyApplication.log", rollingInterval: RollingInterval.Infinite)
     .CreateLogger();
 builder.Host.UseSerilog();  // for logging purposes
 #endregion
@@ -21,6 +21,7 @@ builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(conne
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IActiveUserRepository, ActiveUserRepository>();
 // Add services to the container.
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>
