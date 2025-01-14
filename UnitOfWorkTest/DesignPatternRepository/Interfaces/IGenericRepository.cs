@@ -4,9 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace UnitOfWorkTest.Repositories.Interfaces
+namespace UnitOfWorkTest.DesignPatternRepository.Interfaces
 {
-    public interface IRepository<T, Id> where T : class
+    public interface IGenericRepository<T, Id> 
+    where T : class
     {
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);

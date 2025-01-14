@@ -172,6 +172,7 @@
 /Users/anushath/Tests/uow/UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.csproj.CoreCompileInputs.cache
 /Users/anushath/Tests/uow/UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.MvcApplicationPartsAssemblyInfo.cs
 /Users/anushath/Tests/uow/UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.MvcApplicationPartsAssemblyInfo.cache
+/Users/anushath/Tests/uow/UnitOfWorkTest/obj/Debug/net8.0/UnitOfWorkTest.sourcelink.json
 /Users/anushath/Tests/uow/UnitOfWorkTest/obj/Debug/net8.0/staticwebassets.build.json
 /Users/anushath/Tests/uow/UnitOfWorkTest/obj/Debug/net8.0/staticwebassets.development.json
 /Users/anushath/Tests/uow/UnitOfWorkTest/obj/Debug/net8.0/staticwebassets/msbuild.UnitOfWorkTest.Microsoft.AspNetCore.StaticWebAssets.props

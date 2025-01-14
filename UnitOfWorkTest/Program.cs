@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using UnitOfWorkTest;
-using UnitOfWorkTest.Repositories;
-using UnitOfWorkTest.Repositories.Classes;
-using UnitOfWorkTest.Repositories.Interfaces;
+using UnitOfWorkTest.Data;
+using UnitOfWorkTest.DesignPatternRepository;
+using UnitOfWorkTest.DesignPatternRepository.Classes;
+using UnitOfWorkTest.DesignPatternRepository.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,9 +20,11 @@ builder.Host.UseSerilog();  // for logging purposes
 string connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
 builder.Services.AddDbContext<MyDbContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IActiveUserRepository, ActiveUserRepository>();
+builder.Services.AddScoped<IGenericRepository<Order, int>, OrderRepository>();
+
 // Add services to the container.
 
 builder.Services.AddControllers().AddNewtonsoftJson(options =>

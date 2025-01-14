@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using UnitOfWorkTest.Repositories.Interfaces;
+using UnitOfWorkTest.DesignPatternRepository.Interfaces;
+using UnitOfWorkTest.Data;
 
-namespace UnitOfWorkTest.Repositories.Classes
+namespace UnitOfWorkTest.DesignPatternRepository.Classes
 {
-    public class GenericRepository<T, Id> : IRepository<T, Id> where T : class
+    public class GenericRepository<T, Id> : IGenericRepository<T, Id>
+    where T : class
     {
         private readonly MyDbContext _context;
         private readonly DbSet<T> _dbSet;
@@ -21,6 +23,7 @@ namespace UnitOfWorkTest.Repositories.Classes
         public async Task<T> AddAsync(T entity)
         {
             var newEntity = await this._dbSet.AddAsync(entity);
+            _context.Entry(entity).State = EntityState.Added;
             return newEntity.Entity;
         }
 
@@ -47,8 +50,8 @@ namespace UnitOfWorkTest.Repositories.Classes
 
         public Task<T> UpdateAsync(T entity)
         {
-            var updatedEntity = this._context.Update(entity);
-            this._context.Entry(entity).State = EntityState.Modified;
+            var updatedEntity = this._dbSet.Update(entity);
+            _context.Entry(entity).State = EntityState.Modified;
             return Task.FromResult(updatedEntity.Entity);
         }
     }

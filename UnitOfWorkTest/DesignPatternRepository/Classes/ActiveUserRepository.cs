@@ -2,17 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using UnitOfWorkTest.Repositories.Classes;
-using UnitOfWorkTest.Repositories.Interfaces;
+using UnitOfWorkTest.DesignPatternRepository.Classes;
+using UnitOfWorkTest.DesignPatternRepository.Interfaces;
+using UnitOfWorkTest.Data;
 
-namespace UnitOfWorkTest.Repositories.Classes
+namespace UnitOfWorkTest.DesignPatternRepository.Classes
 {
   public class ActiveUserRepository : GenericRepository<ActiveUser, int>, IActiveUserRepository
   {
-    public readonly MyDbContext _context;
     public ActiveUserRepository(MyDbContext context) : base(context)
     {
-      this._context = context;
     }
   }
 }

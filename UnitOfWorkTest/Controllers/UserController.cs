@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using UnitOfWorkTest.Repositories;
-using UnitOfWorkTest.Repositories.Classes;
-using UnitOfWorkTest.Repositories.Interfaces;
+using UnitOfWorkTest.DesignPatternRepository;
+using UnitOfWorkTest.DesignPatternRepository.Classes;
+using UnitOfWorkTest.DesignPatternRepository.Interfaces;
+using UnitOfWorkTest.Data;
 
 namespace UnitOfWorkTest.Controllers;
 
@@ -9,10 +10,14 @@ namespace UnitOfWorkTest.Controllers;
 [Route("[controller]")]
 public class UserController : ControllerBase
 {
-    private readonly UnitOfWork _unitOfWork;
-    public UserController(IUnitOfWork unitOfWork)
+    private readonly ILogger<UserController> _logger;
+    private readonly IUnitOfWork _unitOfWork;
+    public UserController(
+        ILogger<UserController> logger, 
+        IUnitOfWork unitOfWork)
     {
-        this._unitOfWork = unitOfWork as UnitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
+        this._logger = logger;
+        this._unitOfWork = unitOfWork;
     }
 
 
@@ -20,18 +25,26 @@ public class UserController : ControllerBase
     public async Task<IEnumerable<User>> GetTopNUsers(int top)
     {
         var users = await this._unitOfWork.UserRepository.GetTopNUsers(top);
-        await this._unitOfWork.CommitAsync();
+        this._unitOfWork.Commit();
         return users;
     }
 
-    [HttpGet("AddAsync")]
-    public async Task<User> AddAsync()
+    [HttpPost("AddAsync")]
+    public async Task<User> AddAsync([FromBody] User user)
     {
-        User _user = new User() { Name = $"John - {DateTime.Now}" };
-        var newUser = await this._unitOfWork.UserRepository.AddAsync(_user);
-        await this._unitOfWork.ActiveUserRepository.AddAsync(new ActiveUser() { Id=1, Active = true });
-        await this._unitOfWork.CommitAsync();
+        var newUser = await this._unitOfWork.UserRepository.AddAsync(user);
+        ActiveUser activeUser = new ActiveUser() { Id = newUser.Id, Active = true, User = newUser };
+        await this._unitOfWork.ActiveUserRepository.AddAsync(activeUser);
+        this._unitOfWork.Commit();
         return newUser;
     }
 
+
+    [HttpDelete("DeleteAsync/{id}")]
+    public async Task<User> DeleteAsync(int id)
+    {
+        var user = await this._unitOfWork.UserRepository.DeleteAsync(id);
+        this._unitOfWork.Commit();
+        return user;
+    }
 }

@@ -6,33 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace UnitOfWorkTest
+namespace UnitOfWorkTest.Data
 {
-    [Table("Users")]
-    public class User
-    {
-        [Column("Id", TypeName = "int")]
-        public int Id { get; set; }
-
-        [Column("Name", TypeName = "varchar(500)")]
-        public string Name { get; set; } = string.Empty;
-
-        //references
-        public IEnumerable<ActiveUser> ActiveUsers { get; set; } = null!;
-    }
-
-    [Table("ActiveUser")]
-    public class ActiveUser
-    {
-        public int AutoId { get; set; }
-        public int Id { get; set; }
-        public bool Active { get; set; } = false;
-
-        //references
-        public User User { get; set; } = null!;
-    }
-
-
     public class MyDbContext : DbContext
     {
         public MyDbContext(DbContextOptions<MyDbContext> options)
@@ -43,10 +18,21 @@ namespace UnitOfWorkTest
 
         public virtual DbSet<User> Users { get; set; } = null!;
         public virtual DbSet<ActiveUser> ActiveUsers { get; set; } = null!;
+        public virtual DbSet<Order> Orders { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            #region Order
+            modelBuilder.Entity<Order>(e =>
+            {
+                e.HasKey(e => e.OrderId).IsClustered(true);
+                e.Property(e => e.OrderId).HasColumnType("int").UseIdentityColumn(1, 1).IsRequired();
+                e.Property(e => e.OrderDate).HasColumnType("datetime").HasDefaultValueSql("getdate()").IsRequired();
+                e.Property(e => e.OrderTotal).HasColumnType("money").IsRequired();
+            });
+            #endregion
+
             #region User
             modelBuilder.Entity<User>(e =>
            {
